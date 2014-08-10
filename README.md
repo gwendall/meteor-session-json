@@ -3,7 +3,7 @@ Meteor Session JSON
 
 JSON getters / setters for Session variables
 
-Problem:
+Problem
 -------
 
 Let's create a vanilla Session value.
@@ -45,9 +45,10 @@ Session.get("json")
 
 Trying to access the "some.nested" property through Session.get("json.some.nested") returns "undefined", and trying to change this property through Session.set("json.some.nested", "other value") would create a new Session variable with the "json.some.nested" key, since Sessions (and ReactiveDict objects in general) in Meteor are simple key / value stores.
 
-Here is what session-json allows.
+Solution
+--------
 
-# Session.getJSON(property)
+### Session.getJSON(property)
 
 ``` sh
 
@@ -56,7 +57,7 @@ Session.getJSON("json.some.nested");
 
 ```
 
-# Session.setJSON(property, value)
+### Session.setJSON(property, value)
 
 ``` sh
 
