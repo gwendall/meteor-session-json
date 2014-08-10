@@ -3,7 +3,7 @@
   "description": "JSON getter / setters for Session variables",
   "homepage": "https://github.com/Gwendall/meteor-session-json",
   "author": "Gwendall Esnault <gwendall.esnault@gmail.com>",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "git": "https://github.com/Gwendall/meteor-session-json",
   "packages": {}
 }

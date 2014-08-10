@@ -30,18 +30,21 @@ var deep = function (obj, key, value) {
 
 }
 
-_.extend(ReactiveDict.prototype, {
+_.extend(ReactiveDict.prototype, { 
+	
 	getJSON: function(selector) {
 		
+		console.log('Getting JSON.', selector);
+
 		var self = this,
 			pathKeys = selector.split('.');
-		
+
 		if (pathKeys.length == 1) {
 
 			return self.get(selector);
 
 		} else {
-			
+
 			var sessionKey = pathKeys[0],
 				jsonValue = self.get(sessionKey);
 
@@ -51,32 +54,42 @@ _.extend(ReactiveDict.prototype, {
 				value = deep(jsonValue, jsonPath);
 
 			return value;
-			
+
 		}
+		
+	}
+
+});
+
+_.extend(ReactiveDict.prototype, { 
 	
-	},
 	setJSON: function(selector, value) {
 		
 		var self = this,
 			pathKeys = selector.split('.');
-		
+
 		if (pathKeys.length == 1) {
 
 			return self.set(selector, value);
 
 		} else {
-			
+
 			var sessionKey = pathKeys[0],
 				jsonValue = self.get(sessionKey);
 
-			pathKeys.shift();
-
-			var jsonPath = pathKeys.join('.'),
-				value = deep(jsonValue, jsonPath, value);
+			if (!jsonValue) {
+				jsonValue = {};
+				self.set(sessionKey, jsonValue);
+			};
 			
+			pathKeys.shift();
+			var jsonPath = pathKeys.join('.');
+
+			value = deep(jsonValue, jsonPath, value);
 			return self.set(sessionKey, value);
 			
 		}
 		
 	}
+
 });
