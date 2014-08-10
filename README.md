@@ -3,6 +3,17 @@ Meteor Session JSON
 
 Reactive JSON getters / setters for Session variables
 
+Installation
+------------
+
+Install using Meteorite. When in a Meteorite-managed app directory, enter:
+
+``` sh
+
+$ mrt add session-json
+
+```
+
 Problem
 -------
 
