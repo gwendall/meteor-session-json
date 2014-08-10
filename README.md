@@ -90,4 +90,16 @@ Session.setJSON("aCoolSessionVariable.aCoolArray[0]", "first array value!");
 
 ```
 
+You can then access this array.
+
+``` sh
+
+Session.getJSON("aCoolSessionVariable.aCoolArray");
+
+// > ["first array value!"]
+
+}
+
+```
+
 Enjoy!
