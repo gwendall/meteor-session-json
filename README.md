@@ -38,9 +38,6 @@ Session.get("json")
 // > { 
 	some: {
 		nested: "value" // Unchanged!
-	},
-	and: {
-		arrays: [1, 2, 3]		
 	}
 }
 
@@ -69,9 +66,6 @@ Session.get("json")
 // > { 
 	some: {
 		nested: "other value"
-	},
-	and: {
-		arrays: [1, 2, 3]		
 	}
 }
 
