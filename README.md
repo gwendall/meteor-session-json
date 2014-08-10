@@ -46,9 +46,9 @@ Session.get("json")
 
 ```
 
-Trying to access the "some.nested" property through Session.get("some.nested") returns "undefined", and trying to change this property through Session.set("some.nested", "other value") would create a new Session variable with the "some.nested" key.
+Trying to access the "some.nested" property through Session.get("json.some.nested") returns "undefined", and trying to change this property through Session.set("json.some.nested", "other value") would create a new Session variable with the "json.some.nested" key, since Sessions (and ReactiveDict objects in general) in Meteor are simple key / value stores.
 
-Here is what session-json offers.
+Here is what session-json allows.
 
 # Session.getJSON(property)
 
