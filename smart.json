@@ -1,5 +1,5 @@
 {
-  "name": "form-session-binder",
+  "name": "form-data-binder",
   "description": "Bind parsed form and input data to Session variables",
   "homepage": "https://github.com/Gwendall/meteor-form-session-binder",
   "author": "Gwendall Esnault <gwendall.esnault@gmail.com>",

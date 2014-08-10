@@ -11,6 +11,7 @@ Package.on_use(function (api, where) {
 		], 'client');
 	}
 	api.add_files([
+		'vendor/form2js/js2form.js',
 		'vendor/form2js/form2js.js',
 		'vendor/form2js/form2js.json2.js',
 		'export.js'

@@ -6,41 +6,93 @@
 	- A timeout is used to prevent setting the Session var on each keyup (see for example http://stackoverflow.com/questions/1909441/jquery-keyup-delay)
 */
 
-var sbTimeout = null;
+/////////////////////
+// ELEMENT -> DATA //
+/////////////////////
 
-function sessionBind(element, data) {
+$(document).on("keyup change", "form[session-bind] :input", function(e) {
 	
+	var element = $(e.target).parents("form");
+	$(element).bindElementToSession();
+
+});
+
+$(document).on("keyup change", ":input[session-bind]", function(e) {
+	
+	var element = $(e.target);
+	$(element).bindElementToSession();
+
+});
+
+var sbTimeout = null;
+$.fn.bindElementToSession = function() {
+	
+	var self = this,
+		data = $(self).valueJSON();
+
 	if (sbTimeout != null) {
 		clearTimeout(sbTimeout);
 		sbTimeout = null;
 	}
 
-	var timeout = Number($(element).attr("sb-timeout")) || 0;	
+	var timeout = Number($(self).attr("sb-timeout")) || 0;	
 	sbTimeout = setTimeout(function() {
 
-		var session = $(element).attr("session-bind") || $(element).attr("sb-session");
+		var session = $(self).getElementSessionName();
 		Session.set(session, data);
-		console.log('Session changed!', data);
 		
 	}, timeout); 			
 	
 }
 
-$(document).on("keyup click change", "form[session-bind] :input", function(e) {
+$.fn.valueJSON = function() {
 	
-	var form = $(e.target).parents("form")[0]
-		data = form2js(form);
-	
-	sessionBind(form, data);
-
-});
-
-$(document).on("keyup click change", ":input[session-bind]", function(e) {
-	
-	var input = $(e.target)[0]
+	var self = this,
+		elementType = $(self).get(0).tagName,
 		data = {};
-		data[$(input).attr("name")] = $(input).val();
 
-	sessionBind(input, data);
+	if (elementType == 'FORM') data = form2js($(self).get(0));
+	if (elementType == 'INPUT') data[$(self).attr("name")] = $(self).val();
 
-});
+	return data;
+	
+}
+
+$.fn.getElementSessionName = function() {
+
+	var session = $(this).attr("session-bind") || null;
+	return session;
+
+}
+
+/////////////////////
+// DATA -> ELEMENT //
+/////////////////////
+
+$.fn.bindDataToElement = function(data, fields) {
+	
+	var self = this,
+		elementType = $(self).get(0).tagName,
+		currentData = $(self).valueJSON();
+	
+	if (!_.isString(data)) {
+		if (_.isArray(fields)) data = _.pick(data, fields);
+		data = _.extend(currentData, data);		
+	}
+
+	if (elementType == 'FORM') js2form($(self).get(0), data);
+	if (elementType == 'INPUT') {
+		if (!_.isString(data)) data = data[$(self).attr('name')];
+		$(self).val(data);
+	}
+
+}
+
+$.fn.bindSessionToElement = function(fields) {
+	
+	var self = this,
+		session = $(self).getElementSessionName() || null,
+		sessionData = Session.get(session) || null;
+		$(self).bindDataToElement(sessionData, fields);
+
+}
