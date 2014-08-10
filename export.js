@@ -34,8 +34,6 @@ _.extend(ReactiveDict.prototype, {
 	
 	getJSON: function(selector) {
 		
-		console.log('Getting JSON.', selector);
-
 		var self = this,
 			pathKeys = selector.split('.');
 
@@ -45,13 +43,18 @@ _.extend(ReactiveDict.prototype, {
 
 		} else {
 
-			var sessionKey = pathKeys[0],
-				jsonValue = self.get(sessionKey);
+			var key = pathKeys[0],
+				jsonValue = self.get(key);
 
 			pathKeys.shift();
 
-			var jsonPath = pathKeys.join('.'),
-				value = deep(jsonValue, jsonPath);
+			var jsonPath = pathKeys.join('.');
+
+			try {
+				value = deep(jsonValue, jsonPath);				
+			} catch(e) {
+				value = null;				
+			}
 
 			return value;
 
@@ -66,27 +69,27 @@ _.extend(ReactiveDict.prototype, {
 	setJSON: function(selector, value) {
 		
 		var self = this,
-			pathKeys = selector.split('.');
+			pathKeys = selector.split('.'),
+			key = pathKeys[0];
 
 		if (pathKeys.length == 1) {
-
-			return self.set(selector, value);
+			
+			self.set(selector, value);
 
 		} else {
 
-			var sessionKey = pathKeys[0],
-				jsonValue = self.get(sessionKey);
+			var jsonValue = self.getJSON(key);
 
 			if (!jsonValue) {
 				jsonValue = {};
-				self.set(sessionKey, jsonValue);
+				self.set(key, jsonValue);
 			};
 			
 			pathKeys.shift();
 			var jsonPath = pathKeys.join('.');
-
+			
 			value = deep(jsonValue, jsonPath, value);
-			return self.set(sessionKey, value);
+			self.set(key, value);
 			
 		}
 		
