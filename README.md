@@ -54,7 +54,7 @@ Here is what session-json allows.
 
 ``` sh
 
-Session.getJSON(json.some.nested);
+Session.getJSON("json.some.nested");
 // > "value"
 
 ```
