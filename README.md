@@ -13,9 +13,6 @@ Let's create a vanilla Session value.
 var json = { 
 	some: {
 		nested: "value"
-	},
-	and: {
-		arrays: [1, 2, 3]		
 	}
 };
 
