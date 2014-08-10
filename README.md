@@ -11,7 +11,6 @@ Install using Meteorite. When in a Meteorite-managed app directory, enter:
 ``` sh
 
 $ mrt add session-json
-
 ```
 
 Problem
@@ -28,7 +27,6 @@ var json = {
 };
 
 Session.set("json", json);
-
 ```
 
 Let's try to get / set those nested properties.
@@ -38,7 +36,6 @@ Let's try to get / set those nested properties.
 Session.get("json.some.nested")
 
 // > undefined
-
 ```
 
 ``` sh
@@ -51,7 +48,6 @@ Session.get("json")
 		nested: "value" // Unchanged!
 	}
 }
-
 ```
 
 Trying to access the "some.nested" property through Session.get("json.some.nested") returns "undefined", and trying to change this property through Session.set("json.some.nested", "other value") would create a new Session variable with the "json.some.nested" key, since Sessions (and ReactiveDict objects in general) in Meteor are simple key / value stores.
@@ -65,7 +61,6 @@ Solution
 
 Session.getJSON("json.some.nested");
 // > "value"
-
 ```
 
 ### Session.setJSON(property, value)
@@ -80,7 +75,6 @@ Session.get("json")
 		nested: "other value"
 	}
 }
-
 ```
 
 ### Note
@@ -96,7 +90,6 @@ Session.getJSON("someArray");
 
 Session.getJSON("someArray[0]");
 // > "first array value!"
-
 ```
 
 In this case, it would create a Session variable with the key "someArray[0]" and store its value as a string. 
@@ -106,7 +99,6 @@ To set / edit an element in an array, set it as a nested property.
 ``` sh
 
 Session.setJSON("someProperty.someArray[0]", "first array value!");
-
 ```
 
 You can then access this array.
@@ -116,7 +108,6 @@ You can then access this array.
 Session.getJSON("someProperty.someArray");
 
 // > ["first array value!"]
-
 ```
 
 Enjoy!
