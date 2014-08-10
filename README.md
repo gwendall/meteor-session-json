@@ -72,4 +72,22 @@ Session.get("json")
 
 ```
 
+### Note
+
+Meteor Sessions can't store arrays (but can store objects containing arrays) so doing the following thing won't work as you may want.
+
+``` sh
+
+Session.setJSON("aCoolArray[0]", "first array value!");
+
+```
+
+In this case, it would create a Session variable with the key "aCoolArray[0]" (as a string). To set / edit an element in an array, set it as a nested property.
+
+``` sh
+
+Session.setJSON("aCoolSessionVariable.aCoolArray[0]", "first array value!");
+
+```
+
 Enjoy!
