@@ -79,12 +79,18 @@ Meteor Sessions can't store arrays directly, but can store objects containing ar
 ``` sh
 
 Session.setJSON("someArray[0]", "first array value!");
+
 Session.getJSON("someArray");
 // > undefined
 
+Session.getJSON("someArray[0]");
+// > "first array value!"
+
 ```
 
-In this case, it would create a Session variable with the key "aCoolArray[0]" (as a string). To set / edit an element in an array, set it as a nested property.
+In this case, it would create a Session variable with the key "aCoolArray[0]" and store its value as a string. 
+
+To set / edit an element in an array, set it as a nested property.
 
 ``` sh
 
