@@ -79,6 +79,8 @@ Meteor Sessions can't store arrays directly, but can store objects containing ar
 ``` sh
 
 Session.setJSON("someArray[0]", "first array value!");
+Session.getJSON("someArray");
+// > undefined
 
 ```
 
