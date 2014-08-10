@@ -86,7 +86,7 @@ In this case, it would create a Session variable with the key "aCoolArray[0]" (a
 
 ``` sh
 
-Session.setJSON("somePropery.someArray[0]", "first array value!");
+Session.setJSON("someProperty.someArray[0]", "first array value!");
 
 ```
 
@@ -94,7 +94,7 @@ You can then access this array.
 
 ``` sh
 
-Session.getJSON("somePropery.someArray");
+Session.getJSON("someProperty.someArray");
 
 // > ["first array value!"]
 
