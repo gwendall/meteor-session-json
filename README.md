@@ -98,8 +98,6 @@ Session.getJSON("aCoolSessionVariable.aCoolArray");
 
 // > ["first array value!"]
 
-}
-
 ```
 
 Enjoy!
