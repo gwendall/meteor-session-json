@@ -1,98 +1,82 @@
-/*
-	Notes
-	=====
-	- It uses jQuery because UI.body events are buggy (https://github.com/meteor/meteor/wiki/Using-Blaze#uibody-is-now-a-template-corresponding-to-the-entire-body-element)
-	- Form data is parsed with https://github.com/maxatwork/form2js
-	- A timeout is used to prevent setting the Session var on each keyup (see for example http://stackoverflow.com/questions/1909441/jquery-keyup-delay)
-*/
-
-/////////////////////
-// ELEMENT -> DATA //
-/////////////////////
-
-$(document).on("keyup change", "form[session-bind] :input", function(e) {
+var deep = function (obj, key, value) {
 	
-	var element = $(e.target).parents("form");
-	$(element).bindElementToSession();
+	var keys = key.replace(/\[(["']?)([^\1]+?)\1?\]/g, '.$2').replace(/^\./, '').split('.'),
+			root,
+			i = 0,
+			n = keys.length;
 
-});
+	// Set deep value
+	if (arguments.length > 2) {
 
-$(document).on("keyup change", ":input[session-bind]", function(e) {
-	
-	var element = $(e.target);
-	$(element).bindElementToSession();
+		root = obj;
+		n--;
 
-});
+		while (i < n) {
+			key = keys[i++];
+			obj = obj[key] = _.isObject(obj[key]) ? obj[key] : {};
+		}
 
-var sbTimeout = null;
-$.fn.bindElementToSession = function() {
-	
-	var self = this,
-		data = $(self).valueJSON();
+		obj[keys[i]] = value;
 
-	if (sbTimeout != null) {
-		clearTimeout(sbTimeout);
-		sbTimeout = null;
+		value = root;
+
+	// Get deep value
+	} else {
+		while ((obj = obj[keys[i++]]) != null && i < n) {};
+		value = i < n ? void 0 : obj;
 	}
 
-	var timeout = Number($(self).attr("sb-timeout")) || 0;	
-	sbTimeout = setTimeout(function() {
+	return value;
 
-		var session = $(self).getElementSessionName();
-		Session.set(session, data);
+}
+
+_.extend(ReactiveDict.prototype, {
+	getJSON: function(selector) {
 		
-	}, timeout); 			
+		var self = this,
+			pathKeys = selector.split('.');
+		
+		if (pathKeys.length == 1) {
+
+			return self.get(selector);
+
+		} else {
+			
+			var sessionKey = pathKeys[0],
+				jsonValue = self.get(sessionKey);
+
+			pathKeys.shift();
+
+			var jsonPath = pathKeys.join('.'),
+				value = deep(jsonValue, jsonPath);
+
+			return value;
+			
+		}
 	
-}
+	},
+	setJSON: function(selector, value) {
+		
+		var self = this,
+			pathKeys = selector.split('.');
+		
+		if (pathKeys.length == 1) {
 
-$.fn.valueJSON = function() {
-	
-	var self = this,
-		elementType = $(self).get(0).tagName,
-		data = {};
+			return self.set(selector, value);
 
-	if (elementType == 'FORM') data = form2js($(self).get(0));
-	if (elementType == 'INPUT') data[$(self).attr("name")] = $(self).val();
+		} else {
+			
+			var sessionKey = pathKeys[0],
+				jsonValue = self.get(sessionKey);
 
-	return data;
-	
-}
+			pathKeys.shift();
 
-$.fn.getElementSessionName = function() {
-
-	var session = $(this).attr("session-bind") || null;
-	return session;
-
-}
-
-/////////////////////
-// DATA -> ELEMENT //
-/////////////////////
-
-$.fn.bindDataToElement = function(data, fields) {
-	
-	var self = this,
-		elementType = $(self).get(0).tagName,
-		currentData = $(self).valueJSON();
-	
-	if (!_.isString(data)) {
-		if (_.isArray(fields)) data = _.pick(data, fields);
-		data = _.extend(currentData, data);		
+			var jsonPath = pathKeys.join('.'),
+				value = deep(jsonValue, jsonPath, value);
+			
+			return self.set(sessionKey, value);
+			
+		}
+		
 	}
-
-	if (elementType == 'FORM') js2form($(self).get(0), data);
-	if (elementType == 'INPUT') {
-		if (!_.isString(data)) data = data[$(self).attr('name')];
-		$(self).val(data);
-	}
-
-}
-
-$.fn.bindSessionToElement = function(fields) {
-	
-	var self = this,
-		session = $(self).getElementSessionName() || null,
-		sessionData = Session.get(session) || null;
-		$(self).bindDataToElement(sessionData, fields);
-
-}
+});
