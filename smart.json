@@ -1,0 +1,9 @@
+{
+  "name": "form-session-binder",
+  "description": "Bind parsed form and input data to Session variables",
+  "homepage": "https://github.com/Gwendall/meteor-underscore-helper",
+  "author": "Gwendall Esnault <gwendall.esnault@gmail.com>",
+  "version": "0.1.0",
+  "git": "https://github.com/Gwendall/meteor-underscore-helper",
+  "packages": {}
+}
