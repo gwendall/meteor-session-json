@@ -1,9 +1,9 @@
 {
   "name": "form-data-binder",
   "description": "Bind parsed form and input data to Session variables",
-  "homepage": "https://github.com/Gwendall/meteor-form-session-binder",
+  "homepage": "https://github.com/Gwendall/meteor-form-data-binder",
   "author": "Gwendall Esnault <gwendall.esnault@gmail.com>",
-  "version": "0.1.1",
-  "git": "https://github.com/Gwendall/meteor-form-session-binder",
+  "version": "0.1.2",
+  "git": "https://github.com/Gwendall/meteor-form-data-binder",
   "packages": {}
 }
