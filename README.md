@@ -74,7 +74,7 @@ Session.get("json")
 
 ### Note
 
-Meteor Sessions can't store arrays (but can store objects containing arrays) so doing the following thing won't work as you may want.
+Meteor Sessions can't store arrays directly, but can store objects containing arrays. So doing the following thing won't work as you may want.
 
 ``` sh
 
