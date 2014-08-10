@@ -78,7 +78,7 @@ Meteor Sessions can't store arrays directly, but can store objects containing ar
 
 ``` sh
 
-Session.setJSON("aCoolArray[0]", "first array value!");
+Session.setJSON("someArray[0]", "first array value!");
 
 ```
 
@@ -86,7 +86,7 @@ In this case, it would create a Session variable with the key "aCoolArray[0]" (a
 
 ``` sh
 
-Session.setJSON("aCoolSessionVariable.aCoolArray[0]", "first array value!");
+Session.setJSON("somePropery.someArray[0]", "first array value!");
 
 ```
 
@@ -94,7 +94,7 @@ You can then access this array.
 
 ``` sh
 
-Session.getJSON("aCoolSessionVariable.aCoolArray");
+Session.getJSON("somePropery.someArray");
 
 // > ["first array value!"]
 
