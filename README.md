@@ -88,7 +88,7 @@ Session.getJSON("someArray[0]");
 
 ```
 
-In this case, it would create a Session variable with the key "aCoolArray[0]" and store its value as a string. 
+In this case, it would create a Session variable with the key "someArray[0]" and store its value as a string. 
 
 To set / edit an element in an array, set it as a nested property.
 
