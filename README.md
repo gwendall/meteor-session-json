@@ -1,4 +1,4 @@
-Form-Data Binder
+Meteor Session JSON
 ===================
 
 JSON getters / setters for Session variables
