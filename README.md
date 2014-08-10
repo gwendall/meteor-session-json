@@ -1,7 +1,7 @@
 Meteor Session JSON
 ===================
 
-JSON getters / setters for Session variables
+Reactive JSON getters / setters for Session variables
 
 Problem
 -------
