@@ -8,12 +8,12 @@ Installation
 
 **Meteor 0.9+**
 ```
-gwendall:session-json
+meteor add gwendall:session-json
 ```
 
 **Prior to Meteor 0.9**
 ```
-$ mrt add session-json
+mrt add session-json
 ```
 
 Problem
