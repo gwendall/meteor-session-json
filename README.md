@@ -6,10 +6,13 @@ Reactive JSON getters / setters for Session variables
 Installation
 ------------
 
-Install using Meteorite. When in a Meteorite-managed app directory, enter:
+**Meteor 0.9+**
+```
+gwendall:session-json
+```
 
-``` sh
-
+**Prior to Meteor 0.9**
+```
 $ mrt add session-json
 ```
 
